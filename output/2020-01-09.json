@@ -1,0 +1,3 @@
+[{"date": "2020-01-09", "country": "中国", "countryCode": "CN", "province": "null", "provinceCode": "null", "city": "null", "cityCode": "null", "confirmed": 41, "suspected": 0, "cured": 0, "dead": 0, "existing-confirmed": 41},
+{"date": "2020-01-09", "country": "中国", "countryCode": "CN", "province": "湖北省", "provinceCode": "420000.0", "city": "null", "cityCode": "null", "confirmed": 41, "suspected": 0, "cured": 0, "dead": 0, "existing-confirmed": 41},
+{"date": "2020-01-09", "country": "中国", "countryCode": "CN", "province": "湖北", "provinceCode": "420000.0", "city": "武汉", "cityCode": "420100.0", "confirmed": 41, "suspected": 0, "cured": 0, "dead": 0, "existing-confirmed": 41}]
