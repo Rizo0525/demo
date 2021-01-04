@@ -184,10 +184,12 @@ let d = (function(global, factory) {
             // console.log(options.inputEl);
             // console.log(options.el);
             this.inputEl = options.inputEl;
+
             this.el = options.el;
             this.input = null; //填充日期的input框
             this.div = 'div';
             this.dom = null; //日期选择器
+
             var now = new Date();
             this.today = {
                 nowFullYear: now.getFullYear(), // 年份
@@ -404,6 +406,10 @@ let d = (function(global, factory) {
                 }
                 weekDom.appendChild(fg);
             },
+            fn:function(){
+                this.value = this.choiceDate.date;
+                console.log(this.value);
+            },
             renderMonthDom: function(self) {
                 var _this = this;
                 var div = this.div;
@@ -452,7 +458,10 @@ let d = (function(global, factory) {
                         _this.input.value = this_year + '-' + addZero(this_month) + '-' + addZero(val);
                         // 更新choiceDate.date的值
                         _this.choiceDate.date = this_year + '-' + addZero(this_month) + '-' + addZero(val);
-                        console.log(_this.choiceDate.date);
+                        window.getInputvalue();
+                        // _this.fn()
+                        // console.log(_this.input.value);
+                        // console.log(_this.choiceDate.date);
                         _this.choiceDate.month = this_month;
                         _this.choiceDate.year = this_year;
                         _this.currectChoice = this;
