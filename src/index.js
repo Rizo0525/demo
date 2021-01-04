@@ -6,13 +6,21 @@ window.onload = function () {
         inputEl:'#inputdate',
         el:'#date'
     });
-    document.querySelector('#inputdate').val="2020-01-08"
-    maprenderModule.renderMap("../output/2020-01-08.json")
+    // document.querySelector('#inputdate').val="2020-01-08"
+    $('#inputdate').val('2019-12-01')
+    maprenderModule.renderMap("../output/2019-12-01.json")
+    let data = maprenderModule.getData(`../output/2019-12-01.json`);
     function getInputvalue() {
-        console.log(s.choiceDate.date);
-        document.querySelector('#china-map').innerHTML = ''
-        maprenderModule.renderMap(`../output/${s.choiceDate.date}.json`)
+        data = maprenderModule.getData(`../output/${s.choiceDate.date}.json`)
+        maprenderModule.refreshData(data)
     }
 
-   window.getInputvalue = getInputvalue;
+    $(".buttons>button").each(function (index,value) {
+        $(this).click(function () {
+            $(this).addClass('select')
+            $(this).siblings().removeClass('select')
+            maprenderModule.refreshData(data)
+        })
+    })
+    window.getInputvalue = getInputvalue;
 }

@@ -191,7 +191,7 @@ let d = (function(global, factory) {
             this.dom = null; //日期选择器
 
             var now = new Date();
-            this.today = {
+            this.today1 = {
                 nowFullYear: now.getFullYear(), // 年份
                 nowMonth: now.getMonth() + 1, // 月份
                 nowDay: now.getDate(), // 几号
@@ -200,7 +200,18 @@ let d = (function(global, factory) {
                     return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
                 }
             }
+            this.today = {
+                nowFullYear: 2019, // 年份
+                nowMonth: 12, // 月份
+                nowDay: 1, // 几号
+                nowDays: 7, // 星期几
+                date: function() {
+                    return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
+                }
+            }
             this.weeks = ['日', '一', '二', '三', '四', '五', '六'];
+
+
 
             this.yearDom = null;
             this.weekDom = null;
@@ -239,7 +250,7 @@ let d = (function(global, factory) {
                 this.dom = document.createElement(this.div); //日期选择器
                 // console.log(this.inputEl);
                 // console.log(this.el);
-                console.log(this.parent);
+                // console.log(this.parent);
                 this.parent.appendChild(this.dom);
                 if (!this.isShow) {
                     this.dom.style.display = 'none';
@@ -248,6 +259,12 @@ let d = (function(global, factory) {
                     _this.isShow = true;
                     if (_this.isShow) {
                         _this.dom.style.display = 'block';
+                        if($(".show-month>div:nth-of-type(8)").siblings().hasClass('active')){
+
+                        }else{
+                            $(".show-month>div:nth-of-type(8)").addClass('active')
+
+                        }
                     }
                 });
                 document.addEventListener('click', function(e) {
@@ -297,8 +314,8 @@ let d = (function(global, factory) {
                 now.classList.add('bt');
                 now.innerHTML = '今日';
                 now.addEventListener('click', function() {
-                    _this.currectYear = _this.today.nowFullYear;
-                    _this.currectMonth = _this.today.nowMonth;
+                    _this.currectYear = _this.today1.nowFullYear;
+                    _this.currectMonth = _this.today1.nowMonth;
                     _this.renderMonthDom(_this.showDateDom);
                     _this.showCurrectDate(_this.showDateDom);
                     if (_this.currectChoice) {
@@ -414,7 +431,7 @@ let d = (function(global, factory) {
                 var _this = this;
                 var div = this.div;
                 var monthDom = this.monthDom;
-                var today = this.today;
+                var today = this.today1;
                 var currectYear = this.currectYear; //当前选择的年份
                 var currectMonth = this.currectMonth; //当前选择的月份
                 var showMonth = this.month(currectYear, currectMonth);
@@ -429,7 +446,7 @@ let d = (function(global, factory) {
                     }
                     var nongli = solarDay(showMonth[i].year, showMonth[i].month - 1, showMonth[i].day);
                     item.title = nongli;
-                    if (showMonth[i].date == this.today.date()) {
+                    if (showMonth[i].date == this.today1.date()) {
                         item.classList.add('today');
                     }
                     item.setAttribute('data-month', showMonth[i].month);
@@ -439,11 +456,13 @@ let d = (function(global, factory) {
                         item.classList.add('active');
                         this.currectChoice = item;
                     }
-                    if (showMonth[i].date == this.today.date()) {
+                    if (showMonth[i].date == this.today1.date()) {
                         this.todayDom = item;
                     }
                     // 点击每一个日期
                     item.addEventListener('click', function() {
+                        $(".show-month>div:nth-of-type(8)").removeClass('active')
+
                         if (_this.currectChoice != null) {
                             _this.currectChoice.classList.remove('active');
                             _this.choiceDate = {};
