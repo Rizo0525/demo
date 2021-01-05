@@ -195,23 +195,50 @@ let d = (function(global, factory) {
                 nowFullYear: now.getFullYear(), // 年份
                 nowMonth: now.getMonth() + 1, // 月份
                 nowDay: now.getDate(), // 几号
-                nowDays: now.getDay(), // 星期几
+                // nowDays: now.getDay(), // 星期几
                 date: function() {
                     return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
                 }
             }
-            this.today = {
-                nowFullYear: 2019, // 年份
-                nowMonth: 12, // 月份
-                nowDay: 1, // 几号
-                nowDays: 7, // 星期几
-                date: function() {
-                    return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
+            if($('#inputdate').val()==""){
+                console.log(1);
+                this.today = {
+                    nowFullYear: 2019, // 年份
+                    nowMonth: 12, // 月份
+                    nowDay: 1, // 几号
+                    date: function() {
+                        return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
+                    }
+                }
+            }else{
+                console.log($('#inputdate'));
+                console.log($('#inputdate').val());
+                console.log(2);
+                let str = $('#inputdate').val()
+                console.log(str);
+                let str1;
+                if(str.slice(5,6)=== '0' && str.slice(8,9)==='0'){
+                    str1 = str.slice(0,5)+str.slice(6,8)+str.slice(9,10)
+                }else if(str.slice(5,6)=== '0'){
+                    str1 = str.slice(0,5)+str.slice(6,10)
+                }else if(str.slice(8,9)==='0'){
+                    str1 = str.slice(0,8)+str.slice(9,10)
+                }else{
+                    str1 = str;
+                }
+                let s = str1.split('-')
+                console.log(s);
+                this.today = {
+                    nowFullYear: s[0], // 年份
+                    nowMonth: s[1], // 月份
+                    nowDay: s[2], // 几号
+                    date: function() {
+                        return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
+                    }
                 }
             }
+
             this.weeks = ['日', '一', '二', '三', '四', '五', '六'];
-
-
 
             this.yearDom = null;
             this.weekDom = null;
@@ -221,12 +248,7 @@ let d = (function(global, factory) {
             this.showDate = function() {
                 return this.currectYear + '年' + addZero(this.currectMonth) + '月';
             }
-            this.showFullDate = function(day) {
-                return this.currectYear + '-' + addZero(this.currectMonth) + '-' + addZero(day);
-            }
-            this.choiceDateFn = function(day) {
-                return this.currectYear + '-' + this.currectMonth + '-' + day;
-            }
+
             this.choiceDate = {}; //选中的日期
             this.currectChoice = null; //选中的日期dom
             this.isShow = false; // 默认不显示日期选择器，只有input框聚焦才显示
@@ -248,9 +270,6 @@ let d = (function(global, factory) {
                 this.input = document.querySelector(this.inputEl); //填充日期的input框
                 this.parent = document.querySelector(this.el);
                 this.dom = document.createElement(this.div); //日期选择器
-                // console.log(this.inputEl);
-                // console.log(this.el);
-                // console.log(this.parent);
                 this.parent.appendChild(this.dom);
                 if (!this.isShow) {
                     this.dom.style.display = 'none';
@@ -263,7 +282,6 @@ let d = (function(global, factory) {
 
                         }else{
                             $(".show-month>div:nth-of-type(8)").addClass('active')
-
                         }
                     }
                 });

@@ -1,16 +1,26 @@
 .buttons{
     display: inline-block;
 }
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -ms-user-select: none;
+}
 button{
     background: #ffffff;
     border: 1px solid #ccc;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -ms-user-select: none;
 }
 .select{
     background: aqua;
 }
 #china-map{
     width: 600px;
-    height: 600px;
+    height: 520px;
     margin-top: 30px;
 }
 #date{

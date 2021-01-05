@@ -1,6 +1,13 @@
+window.curdata = null;
+window.tmpSeriesData = [];
+window.pieces;
+window.str;
+function getDate(date) {
+    window.curdate = date
+}
 function getData(url) {
     // console.log(url);
-    let data;
+    let data = null;
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {/*XHR对象获取到返回信息后执行*/
         if (request.readyState === 4 && request.status === 200) {/*返回状态为200，即为数据获取成功*/
@@ -35,16 +42,16 @@ function loadBdScript(scriptId, url, callback) {
 };
 // 展示对应的省
 function showProvince(pName, Chinese_,data) {
+    console.log(data);
     //这写省份的js都是通过在线构建工具生成的，保存在本地，需要时加载使用即可，最好不要一开始全部直接引入。
     loadBdScript('$' + Chinese_ + 'JS', '../js/map/province/' + Chinese_ + '.js', function () {
         initEcharts(pName, Chinese_,data);
     });
 }
 
-// 初始化echarts
-function initEcharts(pName, Chinese_,data) {
-    window.tmpSeriesData = [];
-    let pieces;
+function dataManage(pName,data) {
+
+    tmpSeriesData = []
     if($('.buttons>button:nth-of-type(1)').hasClass('select')){
         if (pName === 'china') {
             provincesText1.forEach(function (value,index) {
@@ -60,6 +67,8 @@ function initEcharts(pName, Chinese_,data) {
                     }
                 })
             })
+            str = `${curdate} 全国累计确诊总人数为:${data[0].confirmed}人`
+            console.log(str);
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -90,6 +99,7 @@ function initEcharts(pName, Chinese_,data) {
                     }
                 })
             })
+            str = `${curdate} 全国累计治愈总人数为:${data[0].cured}人`
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -120,6 +130,7 @@ function initEcharts(pName, Chinese_,data) {
                     }
                 })
             })
+            str = `${curdate} 全国累计死亡总人数为:${data[0].dead}人`
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -136,8 +147,18 @@ function initEcharts(pName, Chinese_,data) {
         pieces = pName === "china" ? chinaPieces3 : proPieces3;
     }
 
-    console.log(tmpSeriesData);
-    console.log(pName);
+}
+
+// 初始化echarts
+function initEcharts(pName, Chinese_,data) {
+    // console.log(data[0]);
+    // console.log(data);
+    // console.log(data);
+
+    dataManage(pName,data)
+
+    // console.log(tmpSeriesData);
+    // console.log(pName);
     let option = {
         title: {
             text: pName + '疫情图',
@@ -158,7 +179,7 @@ function initEcharts(pName, Chinese_,data) {
             inRange: {
                 color: ['lightskyblue', 'yellow', 'orangered']
             },
-            top: '50%'
+            top: '55%'
         },
         series: [
             {
@@ -182,32 +203,52 @@ function initEcharts(pName, Chinese_,data) {
                 data: tmpSeriesData,
                 top: "3%"//组件距离容器的距离
             }
-        ]
+        ],
+        graphic:[{
+            type:'group',
+            left: 'center',
+            button:130,
+            children:[
+                {
+                    type:'text',
+                    z:100,
+                    // left: 'center',
+                    // top:'middle',
+                    position:[270,500],
+                    style:{
+                        fill:"#333",
+                        text:str,
+                        font:'14px Microsoft YaHei'
+                    }
+                }
+            ]
+        }]
     };
-
-    myChart.setOption(option);
+    myChart.clear()
+    myChart.setOption(option,true);
 
     myChart.off("click");
 
     if (pName === "china") { // 全国时，添加click 进入省级
-        myChart.on('click', function (param) {
-            console.log(param.name);
+        myChart.on('dblclick', function (param) {
+            // console.log(tmpSeriesData);
+            // console.log(param.name);
             //遍历取到provincesText 中的下标  去拿到对应的省js
             for (let i = 0; i < provincesText.length; i++) {
                 if (param.name === provincesText[i]) {
                     //显示对应省份的方法
-                    console.log(provincesText[i], provinces[i]);
-                    console.log(data);
-                    showProvince(provincesText[i], provinces[i],data);
+                    // console.log("wuhusad12",curdata);
+                    showProvince(provincesText[i], provinces[i],curdata);
                     break;
                 }
             }
         });
     } else { // 省份，添加双击 回退到全国
-        myChart.on("dblclick", function () {
-            initEcharts("china", "中国",data);
+        myChart.on("click", function () {
+            // initEcharts("china", "中国",data);
         });
     }
+
 }
 
 function renderMap(url){
@@ -278,14 +319,24 @@ function renderMap(url){
 
 }
 function refreshData(data){
-    let option = myChart.getOption();
-    initEcharts("china", "中国",data);
-    // option.series[0].data = tmpSeriesData;
-    // myChart.setOption(option);
+    curdata = data;
+    // console.log('????',data);
+    window.option = myChart.getOption()
+    // initEcharts("china", "中国",data);
+    dataManage('china',data)
+    option.series[0].data = tmpSeriesData;
+    // console.log(option.graphic[0],option.graphic[0].elements[1].style);
+    option.graphic[0].elements[1].style.text=str
+    myChart.setOption(option);
+
     oBack.onclick = function () {
-        initEcharts("china", "中国",data);
+        // initEcharts("china", "中国",data);
+        dataManage('china',data)
+        option.series[0].data = tmpSeriesData;
+        myChart.setOption(option);
     };
 }
 exports.renderMap = renderMap
 exports.getData = getData
 exports.refreshData = refreshData
+exports.getDate = getDate
