@@ -1,6 +1,13 @@
 .buttons{
     display: inline-block;
 }
+.first_div,.second_div{
+    display: inline-block;
+}
+#brokenLine{
+    width: 600px;
+    height: 400px;
+}
 body {
     -webkit-user-select: none;
     -moz-user-select: none;

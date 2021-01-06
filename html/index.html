@@ -12,17 +12,26 @@
     <link rel="stylesheet" href="../css/font_f73ggj3688c/iconfont.css">
 </head>
 <body>
-<div id="date">
-    <input type="text" value='' placeholder="点击选择时间" id='inputdate' />
+<div>
+    <div class="first_div">
+        <div id="date">
+            <input type="text" value='' placeholder="点击选择时间" id='inputdate' />
+        </div>
+        <button id="back">返回全国</button>
+        <div class="buttons">
+            <button class="select">累计确诊</button>
+            <button>累计治愈</button>
+            <button>累计死亡</button>
+        </div>
+        <button id="refresh">刷新</button>
+        <div id="china-map"></div>
+        <span class="iconfont icon-kaishi"></span>
+    </div>
+    <div class="second_div">
+        <div id="brokenLine"></div>
+    </div>
+
 </div>
-<button id="back">返回全国</button>
-<div class="buttons">
-    <button class="select">累计确诊</button>
-    <button>累计治愈</button>
-    <button>累计死亡</button>
-</div>
-<button id="refresh">刷新</button>
-<div id="china-map"></div>
-<span class="iconfont icon-kaishi"></span>
+
 </body>
 </html>

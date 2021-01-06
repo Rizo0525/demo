@@ -1,7 +1,9 @@
+let brokenLineModule = require('./brokenLine')
 window.curdata = null;
 window.tmpSeriesData = [];
 window.pieces;
 window.str;
+window.strstr;
 function getDate(date) {
     window.curdate = date
 }
@@ -50,9 +52,8 @@ function showProvince(pName, Chinese_,data) {
 }
 
 function dataManage(pName,data) {
-
+    // console.log('!!!!!',data);
     tmpSeriesData = []
-
     if($('.buttons>button:nth-of-type(1)').hasClass('select')){
         if (pName === 'china') {
             provincesText1.forEach(function (value,index) {
@@ -69,6 +70,7 @@ function dataManage(pName,data) {
                 })
             })
             str = `${curdate} 全国累计确诊总人数为:${data[0].confirmed}人`
+            strstr = '确诊'
             // console.log(str);
         }else {
             data.forEach((item)=>{
@@ -101,6 +103,7 @@ function dataManage(pName,data) {
                 })
             })
             str = `${curdate} 全国累计治愈总人数为:${data[0].cured}人`
+            strstr = '治愈'
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -132,6 +135,7 @@ function dataManage(pName,data) {
                 })
             })
             str = `${curdate} 全国累计死亡总人数为:${data[0].dead}人`
+            strstr = '死亡'
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -147,7 +151,43 @@ function dataManage(pName,data) {
         }
         pieces = pName === "china" ? chinaPieces3 : proPieces3;
     }
+    let tmp = []
+    if(pName==='china'){
+        let sum
+        let flag
+        tmpSeriesData.forEach(function (value1, index1) {
+            sum=0;
+            flag = 1
+            tmp.forEach(function (value2,index2){
+                if(value2.name===value1.name){
+                    sum =sum + value2.value
+                    flag = 0;
+                    if(value2.value!==value1.value){
+                        sum =sum + value1.value
 
+                        tmp.forEach(function (value3,index3) {
+                            if(value2.name === value3.name){
+                                value3.value = sum;
+                            }
+                        })
+
+                    }
+                    else{
+                        return true
+                    }
+                }
+            })
+            if(flag){
+                tmp.push(value1)
+            }
+        })
+
+    }else{
+        tmp = tmpSeriesData
+    }
+    tmpSeriesData = tmp;
+    console.log(strstr);
+    brokenLineModule.drawBrokenLine(pName,strstr,tmpSeriesData)
     console.log(pName,tmpSeriesData);
 }
 
@@ -236,16 +276,25 @@ function initEcharts(pName, Chinese_,data) {
             for (let i = 0; i < provincesText.length; i++) {
                 if (param.name === provincesText[i]) {
                     //显示对应省份的方法
-                    console.log("wuhusad12",curdata);
+                    // console.log("wuhusad12",curdata);
                     showProvince(provincesText[i], provinces[i],curdata);
                     break;
                 }
             }
         });
-    } else { // 省份，添加双击 回退到全国
-        myChart.on("click", function () {
+
+        myChart.on("click", function (param) {
             // initEcharts("china", "中国",data);
+            for (let i = 0; i < provincesText.length; i++) {
+                if (param.name === provincesText[i]) {
+                    //显示对应省份的方法
+                    dataManage(provincesText[i],curdata);
+                    break;
+                }
+            }
         });
+    } else { // 省份，添加双击 回退到全国
+
     }
 
 }
@@ -347,7 +396,27 @@ function refreshData(data){
         dataManage('china',data)
         option.series[0].data = tmpSeriesData;
         myChart.setOption(option);
+        myChart.on("click", function (param) {
+            // initEcharts("china", "中国",data);
+            for (let i = 0; i < provincesText.length; i++) {
+                if (param.name === provincesText[i]) {
+                    //显示对应省份的方法
+                    dataManage(provincesText[i],curdata);
+                    break;
+                }
+            }
+        });
     };
+    myChart.on("click", function (param) {
+        // initEcharts("china", "中国",data);
+        for (let i = 0; i < provincesText.length; i++) {
+            if (param.name === provincesText[i]) {
+                //显示对应省份的方法
+                dataManage(provincesText[i],curdata);
+                break;
+            }
+        }
+    });
 }
 exports.renderMap = renderMap
 exports.getData = getData
