@@ -1,4 +1,5 @@
-let brokenLineModule = require('./brokenLine')
+let barLineModule = require('./barLine.js')
+let brokenLineModule = require('./brokenLine.js')
 window.curdata = null;
 window.tmpSeriesData = [];
 window.pieces;
@@ -186,9 +187,9 @@ function dataManage(pName,data) {
         tmp = tmpSeriesData
     }
     tmpSeriesData = tmp;
-    console.log(strstr);
-    brokenLineModule.drawBrokenLine(pName,strstr,tmpSeriesData)
-    console.log(pName,tmpSeriesData);
+    barLineModule.DrawbarLine(pName,strstr,tmpSeriesData)
+    brokenLineModule.refreshBrokenLine()
+    // console.log(pName,tmpSeriesData);
 }
 
 // 初始化echarts
@@ -373,10 +374,9 @@ function renderMap(url){
         };
 
         curdata = data;
-
+        brokenLineModule.drawBrokenLine()
         initEcharts("china", "中国",data);
     })
-
 
 }
 function refreshData(data){
