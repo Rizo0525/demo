@@ -42,7 +42,7 @@ function loadBdScript(scriptId, url, callback) {
 };
 // 展示对应的省
 function showProvince(pName, Chinese_,data) {
-    console.log(data);
+    // console.log(data);
     //这写省份的js都是通过在线构建工具生成的，保存在本地，需要时加载使用即可，最好不要一开始全部直接引入。
     loadBdScript('$' + Chinese_ + 'JS', '../js/map/province/' + Chinese_ + '.js', function () {
         initEcharts(pName, Chinese_,data);
@@ -52,6 +52,7 @@ function showProvince(pName, Chinese_,data) {
 function dataManage(pName,data) {
 
     tmpSeriesData = []
+
     if($('.buttons>button:nth-of-type(1)').hasClass('select')){
         if (pName === 'china') {
             provincesText1.forEach(function (value,index) {
@@ -68,7 +69,7 @@ function dataManage(pName,data) {
                 })
             })
             str = `${curdate} 全国累计确诊总人数为:${data[0].confirmed}人`
-            console.log(str);
+            // console.log(str);
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -147,18 +148,16 @@ function dataManage(pName,data) {
         pieces = pName === "china" ? chinaPieces3 : proPieces3;
     }
 
+    console.log(pName,tmpSeriesData);
 }
 
 // 初始化echarts
 function initEcharts(pName, Chinese_,data) {
-    // console.log(data[0]);
-    // console.log(data);
-    // console.log(data);
+
 
     dataManage(pName,data)
 
-    // console.log(tmpSeriesData);
-    // console.log(pName);
+
     let option = {
         title: {
             text: pName + '疫情图',
@@ -237,7 +236,7 @@ function initEcharts(pName, Chinese_,data) {
             for (let i = 0; i < provincesText.length; i++) {
                 if (param.name === provincesText[i]) {
                     //显示对应省份的方法
-                    // console.log("wuhusad12",curdata);
+                    console.log("wuhusad12",curdata);
                     showProvince(provincesText[i], provinces[i],curdata);
                     break;
                 }
@@ -253,7 +252,8 @@ function initEcharts(pName, Chinese_,data) {
 
 function renderMap(url){
 
-    let data = getData(url)
+
+
     window.myChart = echarts.init(document.getElementById('china-map'));
     window.oBack = document.getElementById("back");
 
@@ -311,11 +311,23 @@ function renderMap(url){
     ];
 
 
-    oBack.onclick = function () {
-        initEcharts("china", "中国",data);
-    };
+    let opromise = new Promise(function (resolve, reject) {
+        let data = getData(url)
+        setTimeout(function () {
+            resolve(data)
+        },500)
+    })
 
-    initEcharts("china", "中国",data);
+    opromise.then(function (data) {
+        oBack.onclick = function () {
+            initEcharts("china", "中国",data);
+        };
+
+        curdata = data;
+
+        initEcharts("china", "中国",data);
+    })
+
 
 }
 function refreshData(data){
@@ -326,6 +338,7 @@ function refreshData(data){
     dataManage('china',data)
     option.series[0].data = tmpSeriesData;
     // console.log(option.graphic[0],option.graphic[0].elements[1].style);
+    // console.log(option.series[0]);
     option.graphic[0].elements[1].style.text=str
     myChart.setOption(option);
 

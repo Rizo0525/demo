@@ -200,43 +200,16 @@ let d = (function(global, factory) {
                     return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
                 }
             }
-            if($('#inputdate').val()==""){
-                console.log(1);
-                this.today = {
-                    nowFullYear: 2019, // 年份
-                    nowMonth: 12, // 月份
-                    nowDay: 1, // 几号
-                    date: function() {
-                        return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
-                    }
-                }
-            }else{
-                console.log($('#inputdate'));
-                console.log($('#inputdate').val());
-                console.log(2);
-                let str = $('#inputdate').val()
-                console.log(str);
-                let str1;
-                if(str.slice(5,6)=== '0' && str.slice(8,9)==='0'){
-                    str1 = str.slice(0,5)+str.slice(6,8)+str.slice(9,10)
-                }else if(str.slice(5,6)=== '0'){
-                    str1 = str.slice(0,5)+str.slice(6,10)
-                }else if(str.slice(8,9)==='0'){
-                    str1 = str.slice(0,8)+str.slice(9,10)
-                }else{
-                    str1 = str;
-                }
-                let s = str1.split('-')
-                console.log(s);
-                this.today = {
-                    nowFullYear: s[0], // 年份
-                    nowMonth: s[1], // 月份
-                    nowDay: s[2], // 几号
-                    date: function() {
-                        return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
-                    }
+
+            this.today = {
+                nowFullYear: 2019, // 年份
+                nowMonth: 12, // 月份
+                nowDay: 1, // 几号
+                date: function() {
+                    return this.nowFullYear + '-' + this.nowMonth + '-' + this.nowDay;
                 }
             }
+
 
             this.weeks = ['日', '一', '二', '三', '四', '五', '六'];
 
