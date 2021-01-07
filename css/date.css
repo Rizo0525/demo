@@ -94,16 +94,13 @@ body {
 }
 button{
     background: #ffffff;
-    opacity: 0.5;
     border: 1px solid #ccc;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     -ms-user-select: none;
 }
-.select{
-    background: #5ea8c9;
-}
+
 #china-map{
     width: 600px;
     height: 520px;

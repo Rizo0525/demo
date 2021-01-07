@@ -43,7 +43,10 @@ function DrawbarLine(pNname,strstr,data) {
         yAxis: {type: 'value'},
         series: [{
             data: city_conformed,
-            type: 'bar'
+            type: 'bar',
+            itemStyle:{
+                // color: '#5337c2'
+            }
             // symbol: 'circle',
             // symbolSize: 0,
             // lineStyle: {
@@ -86,6 +89,17 @@ function refreshbarLine(pNname,strstr,data){
     let option = myChart2.getOption()
     // console.log(option.title);
     // console.log(option.title[0].text);
+    console.log(option.series[0].itemStyle);
+    if(strstr==='确诊'){
+        option.series[0].itemStyle.color='#C23632'
+    }
+    else if(strstr==='治愈'){
+        option.series[0].itemStyle.color='#5337c2'
+    }
+    else if(strstr==='死亡'){
+        option.series[0].itemStyle.color='#c567cb'
+    }
+
     option.title[0].text = `${curdate}${pNname}${strstr}汇总图`
     // console.log(tmpdata);
     option.xAxis[0].data = all_name

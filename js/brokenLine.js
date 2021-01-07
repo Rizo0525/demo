@@ -35,7 +35,7 @@ function drawBrokenLine() {
         data.sort(function (a,b) {
             return (a.date>b.date)?1:-1
         })
-        console.log(data);
+        // console.log(data);
         data.forEach(function (v,i) {
             tmpdata.push({date:v.date,value:v.confirmed})
         })
@@ -70,7 +70,10 @@ function drawBrokenLine() {
                 data: tmpdata.map(function (item) {
                     return item.value
                 }),
-                type: 'line'
+                type: 'line',
+                itemStyle:{
+
+                }
                 // symbol: 'circle',
                 // symbolSize: 0,
                 // lineStyle: {
@@ -130,9 +133,22 @@ function refreshBrokenLine() {
             })
             str = '死亡'
         }
+
+
+
+
         let option = myChart3.getOption()
         // console.log(option.title);
         // console.log(option.title[0].text);
+        if(str==='确诊'){
+            option.series[0].itemStyle.color='#C23632'
+        }
+        else if(str==='治愈'){
+            option.series[0].itemStyle.color='#5337c2'
+        }
+        else if(str==='死亡'){
+            option.series[0].itemStyle.color='#c567cb'
+        }
         option.title[0].text = `全国疫情 ${str} 人数汇总图`
         // console.log(tmpdata);
         option.series[0].data = tmpdata.map(function (item) {

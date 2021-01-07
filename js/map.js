@@ -61,12 +61,13 @@ function dataManage(pName,data) {
             provincesText1.forEach(function (value,index) {
                 data.forEach((item)=>{
                     if(item.province===value){
+                        // console.log('item',item.confirmed);
                         //执行代码
                         let ser = {
                             name: provincesText[index],
                             value: item.confirmed
                         };
-
+                        // console.log('ser:',ser);
                         tmpSeriesData.push(ser);
                     }
                 })
@@ -86,6 +87,7 @@ function dataManage(pName,data) {
                 }
             })
         }
+        // console.log('确诊:',tmpSeriesData);
         pieces = pName === "china" ? chinaPieces1 : proPieces1;
     }
     else if($('.buttons>button:nth-of-type(2)').hasClass('select')){
@@ -152,7 +154,8 @@ function dataManage(pName,data) {
         }
         pieces = pName === "china" ? chinaPieces3 : proPieces3;
     }
-    console.log(pieces);
+    // console.log(pieces);
+    // console.log('3333',tmpSeriesData);
     let tmp = []
     if(pName==='china'){
         let sum
@@ -187,14 +190,20 @@ function dataManage(pName,data) {
     }else{
         tmp = tmpSeriesData
     }
+    // console.log('tmp',tmp);
     tmpSeriesData = tmp;
+    // console.log('1111',pName,tmpSeriesData);
+
+
+
     barLineModule.refreshbarLine(pName,strstr,tmpSeriesData)
     barLineModule.DrawbarLine(pName,strstr,tmpSeriesData)
     brokenLineModule.refreshBrokenLine()
+
     piePicModule.refreshPiePic(pName,strstr,tmpSeriesData)
 
 
-    console.log(pName,tmpSeriesData);
+    // console.log('2222',pName,tmpSeriesData);
 }
 
 // 初始化echarts
@@ -338,35 +347,35 @@ function renderMap(url){
     ];
 
     window.chinaPieces2 = [
-        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#372a28'},
-        {min: 500, max: 999, label: '治愈500-999人', color: '#4e160f'},
-        {min: 100, max: 499, label: '治愈100-499人', color: '#974236'},
-        {min: 10, max: 99, label: '治愈10-99人', color: '#ee7263'},
-        {min: 1, max: 9, label: '治愈1-9人', color: '#f5bba7'},
+        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#2d075f'},
+        {min: 500, max: 999, label: '治愈500-999人', color: '#68229e'},
+        {min: 100, max: 499, label: '治愈100-499人', color: '#5337c2'},
+        {min: 10, max: 99, label: '治愈10-99人', color: '#0d38c4'},
+        {min: 1, max: 9, label: '治愈1-9人', color: '#077dcf'},
     ];
 
     window.proPieces2 = [
-        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#372a28'},
-        {min: 500, max: 999, label: '治愈500-999人', color: '#4e160f'},
-        {min: 100, max: 499, label: '治愈100-499人', color: '#974236'},
-        {min: 10, max: 99, label: '治愈10-99人', color: '#ee7263'},
-        {min: 1, max: 9, label: '治愈1-9人', color: '#f5bba7'},
+        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#2d075f'},
+        {min: 500, max: 999, label: '治愈500-999人', color: '#68229e'},
+        {min: 100, max: 499, label: '治愈100-499人', color: '#5337c2'},
+        {min: 10, max: 99, label: '治愈10-99人', color: '#0d38c4'},
+        {min: 1, max: 9, label: '治愈1-9人', color: '#077dcf'},
     ];
 
     window.chinaPieces3 = [
-        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#372a28'},
-        {min: 500, max: 999, label: '死亡500-999人', color: '#4e160f'},
-        {min: 100, max: 499, label: '死亡100-499人', color: '#974236'},
-        {min: 10, max: 99, label: '死亡10-99人', color: '#ee7263'},
-        {min: 1, max: 9, label: '死亡1-9人', color: '#f5bba7'},
+        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#535cbd'},
+        {min: 500, max: 999, label: '死亡500-999人', color: '#8560c1'},
+        {min: 100, max: 499, label: '死亡100-499人', color: '#c567cb'},
+        {min: 10, max: 99, label: '死亡10-99人', color: '#ff71d1'},
+        {min: 1, max: 9, label: '死亡1-9人', color: '#fdd4ce'},
     ];
 
     window.proPieces3 = [
-        {min: 1000, max: 1000000, label: '死亡等于1000人', color: '#372a28'},
-        {min: 500, max: 999, label: '死亡500-999人', color: '#4e160f'},
-        {min: 100, max: 499, label: '死亡100-499人', color: '#974236'},
-        {min: 10, max: 99, label: '死亡10-99人', color: '#ee7263'},
-        {min: 1, max: 9, label: '死亡1-9人', color: '#f5bba7'},
+        {min: 1000, max: 1000000, label: '大于等于1000人', color: '#535cbd'},
+        {min: 500, max: 999, label: '死亡500-999人', color: '#8560c1'},
+        {min: 100, max: 499, label: '死亡100-499人', color: '#c567cb'},
+        {min: 10, max: 99, label: '死亡10-99人', color: '#ff71d1'},
+        {min: 1, max: 9, label: '死亡1-9人', color: '#fdd4ce'},
     ];
 
 
@@ -399,7 +408,7 @@ function refreshData(data){
     dataManage('china',data)
     option.series[0].data = tmpSeriesData;
     option.visualMap[0].pieces = pieces
-    console.log('visualmap:',option.visualMap[0].pieces);
+    // console.log('visualmap:',option.visualMap[0].pieces);
     // console.log(option.graphic[0],option.graphic[0].elements[1].style);
     // console.log(option.series[0]);
     option.graphic[0].elements[1].style.text=str

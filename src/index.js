@@ -22,6 +22,17 @@ window.onload = function () {
         $(this).click(function () {
             $(this).addClass('select')
             $(this).siblings().removeClass('select')
+            // console.log(typeof $(this).text());
+            $(this).siblings().css('background','none')
+            if($(this).text()==='累计确诊'){
+                $(this).css('background','#C23632')
+            }
+            else if($(this).text()==='累计治愈'){
+                $(this).css('background','#5337c2')
+            }
+            else if($(this).text()==='累计死亡'){
+                $(this).css('background','#c567cb')
+            }
             maprenderModule.refreshData(data)
         })
     })

@@ -1,57 +1,4 @@
-window.first_ten = [];
-
-function DrawPiePic(data) {
-
-    // data.name,data.value
-    // console.log('data:',data);
-    let sheng_data=[];//存放34个区域的所有信息,每个里面存的是类
-
-    data.forEach(function (v) {
-        if(v.value===0){
-            return ;
-        }
-        sheng_data.push(v)
-    })
-
-    // console.log('sheng_data:',sheng_data);//34个地方
-    sort_sheng_data = sheng_data.sort((a,b)=>{
-        return (a.value < b.value)?1:-1
-    })
-
-    // console.log('sheng_data',sort_sheng_data);
-    first_ten = [];//前十个省份
-    if (sort_sheng_data.length>=10){
-        for (let i =0;i<10;i++){
-            first_ten.push(sort_sheng_data[i])
-        }
-    }
-    else
-    {
-        for (let i=0;i<sort_sheng_data.length;i++){
-            first_ten.push(sort_sheng_data[i])
-        }
-    }
-    // console.log('first_ten:',first_ten);
-
-    let flag = 0;
-    first_ten.forEach(function (v) {
-        if(v.value===1){
-            flag = 1;
-            return true;
-        }
-    })
-    if(!flag){
-        first_ten.forEach(function (v) {
-            v.value = Math.log(v.value)
-        })
-    }
-
-    console.log($('.PiePic>svg:nth-of-type(1)'));
-    // console.log('first_ten-changed',first_ten);
-
-    BindData()
-}
-function BindData(pName,str,data){
+function BindData(pName,str,first_ten){
 
     let colors = d3.scaleOrdinal(d3.schemeCategory20);
     let svg = d3.select(".PiePic")
@@ -162,7 +109,7 @@ function BindData(pName,str,data){
         .attr("font-size",7 )
         .text(d => d.data.value.toFixed(1));
 
-    console.log(d3.select('.PiePic>svg'));
+    // console.log(d3.select('.PiePic>svg'));
     if(pName==='china'){
         d3.select('.PiePic>svg:nth-of-type(1)')
             .append('text')
@@ -207,7 +154,7 @@ function refreshPiePic(pName,str,data){
     })
 
     // console.log('sheng_data',sort_sheng_data);
-    first_ten = [];//前十个省份
+    let first_ten = [];//前十个省份
     if (sort_sheng_data.length>=10){
         for (let i =0;i<10;i++){
             first_ten.push(sort_sheng_data[i])
@@ -221,14 +168,16 @@ function refreshPiePic(pName,str,data){
     }
     // console.log('first_ten:',first_ten);
 
+    let first_ten1 = []
     first_ten.forEach(function (v) {
-        v.value = Math.log(v.value)+1
+        first_ten1.push({name:v.name,value:Math.log(v.value)+1})
     })
+    // console.log('first_ten1:changed',first_ten1);
 
     // console.log(d3.select('.PiePic>svg'));
 
-    BindData(pName,str,data)
+    BindData(pName,str,first_ten1)
 
 }
-exports.DrawPiePic = DrawPiePic
+// exports.DrawPiePic = DrawPiePic
 exports.refreshPiePic = refreshPiePic
