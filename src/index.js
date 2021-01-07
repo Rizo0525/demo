@@ -77,8 +77,6 @@ window.onload = function () {
             },200)
 
 
-
-
         }else if($(this).hasClass('icon-zanting')){
             $(this).removeClass('icon-zanting')
             $(this).addClass('icon-kaishi')

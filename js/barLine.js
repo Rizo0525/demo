@@ -13,7 +13,7 @@ function DrawbarLine(pNname,strstr,data) {
     // console.log(all_name);
 
     // console.log(city_conformed);
-    let myChart = echarts.init(document.getElementById('barLine'));
+    window.myChart2 = echarts.init(document.getElementById('barLine'));
 
     // console.log(myChart.getOption());
     // if(myChart.getOption())
@@ -21,7 +21,12 @@ function DrawbarLine(pNname,strstr,data) {
     let option = {
         title: {
             text: `${curdate}${pNname}${strstr}汇总图`,
-            left:'center'
+            left:'center',
+            textStyle:{
+                color:'#5ea8c9',
+                fontFamily:'宋体',
+                fontSize:16
+            }
         },
         tooltip: {
             trigger: 'axis'
@@ -29,7 +34,7 @@ function DrawbarLine(pNname,strstr,data) {
         grid: {
             width:'auto',
             height:'auto',
-            left: '20%'
+            left: '15%'
         },
         xAxis: {
             type: 'category',
@@ -64,7 +69,29 @@ function DrawbarLine(pNname,strstr,data) {
             }
         ]
     };
-    myChart.setOption(option);
+    myChart2.setOption(option);
 }
+function refreshbarLine(pNname,strstr,data){
+    let all_name = []
+    let city_conformed = []//存34个区域确诊断人数
 
+    data.forEach(function (v,i) {
+        if(v.value===0){
+            return ;
+        }
+        all_name.push(v.name)
+        city_conformed.push(v.value)
+    })
+
+    let option = myChart2.getOption()
+    // console.log(option.title);
+    // console.log(option.title[0].text);
+    option.title[0].text = `${curdate}${pNname}${strstr}汇总图`
+    // console.log(tmpdata);
+    option.xAxis[0].data = all_name
+    option.series[0].data = city_conformed
+    // console.log(option.series[0]);
+    myChart2.setOption(option)
+}
+exports.refreshbarLine = refreshbarLine
 exports.DrawbarLine = DrawbarLine

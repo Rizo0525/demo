@@ -1,5 +1,6 @@
 let barLineModule = require('./barLine.js')
 let brokenLineModule = require('./brokenLine.js')
+let piePicModule = require('./PiePic.js')
 window.curdata = null;
 window.tmpSeriesData = [];
 window.pieces;
@@ -72,7 +73,6 @@ function dataManage(pName,data) {
             })
             str = `${curdate} 全国累计确诊总人数为:${data[0].confirmed}人`
             strstr = '确诊'
-            // console.log(str);
         }else {
             data.forEach((item)=>{
                 //执行代码
@@ -152,6 +152,7 @@ function dataManage(pName,data) {
         }
         pieces = pName === "china" ? chinaPieces3 : proPieces3;
     }
+    console.log(pieces);
     let tmp = []
     if(pName==='china'){
         let sum
@@ -187,9 +188,13 @@ function dataManage(pName,data) {
         tmp = tmpSeriesData
     }
     tmpSeriesData = tmp;
+    barLineModule.refreshbarLine(pName,strstr,tmpSeriesData)
     barLineModule.DrawbarLine(pName,strstr,tmpSeriesData)
     brokenLineModule.refreshBrokenLine()
-    // console.log(pName,tmpSeriesData);
+    piePicModule.refreshPiePic(pName,strstr,tmpSeriesData)
+
+
+    console.log(pName,tmpSeriesData);
 }
 
 // 初始化echarts
@@ -202,7 +207,12 @@ function initEcharts(pName, Chinese_,data) {
     let option = {
         title: {
             text: pName + '疫情图',
-            left: 'center'
+            left: 'center',
+            textStyle:{
+                color:'#5ea8c9',
+                fontFamily:'宋体',
+                fontSize:16
+            }
         },
         tooltip:{
             trigger:'item'
@@ -267,6 +277,7 @@ function initEcharts(pName, Chinese_,data) {
     myChart.clear()
     myChart.setOption(option,true);
 
+
     myChart.off("click");
 
     if (pName === "china") { // 全国时，添加click 进入省级
@@ -294,8 +305,6 @@ function initEcharts(pName, Chinese_,data) {
                 }
             }
         });
-    } else { // 省份，添加双击 回退到全国
-
     }
 
 }
@@ -375,7 +384,10 @@ function renderMap(url){
 
         curdata = data;
         brokenLineModule.drawBrokenLine()
+        barLineModule.DrawbarLine('china','确诊',tmpSeriesData)
         initEcharts("china", "中国",data);
+        // console.log("tmpSeriesData:",tmpSeriesData);
+        // piePicModule.DrawPiePic(tmpSeriesData)
     })
 
 }
@@ -386,11 +398,13 @@ function refreshData(data){
     // initEcharts("china", "中国",data);
     dataManage('china',data)
     option.series[0].data = tmpSeriesData;
+    option.visualMap[0].pieces = pieces
+    console.log('visualmap:',option.visualMap[0].pieces);
     // console.log(option.graphic[0],option.graphic[0].elements[1].style);
     // console.log(option.series[0]);
     option.graphic[0].elements[1].style.text=str
     myChart.setOption(option);
-
+    myChart.off('click')
     oBack.onclick = function () {
         // initEcharts("china", "中国",data);
         dataManage('china',data)

@@ -23,7 +23,7 @@ function drawBrokenLine() {
             })
             setTimeout(function () {
                 resolve(tmp)
-            },100)
+            },500)
         })
         //请求数据
         now=new Date(now.getTime()+daymis);
@@ -32,7 +32,10 @@ function drawBrokenLine() {
         // console.log('data:',data);
         let tmpdata = []
         let str;
-
+        data.sort(function (a,b) {
+            return (a.date>b.date)?1:-1
+        })
+        console.log(data);
         data.forEach(function (v,i) {
             tmpdata.push({date:v.date,value:v.confirmed})
         })
@@ -41,7 +44,12 @@ function drawBrokenLine() {
         let option = {
             title: {
                 text: `全国疫情${str}人数汇总图`,
-                left:'center'
+                left:'center',
+                textStyle:{
+                    color:'#5ea8c9',
+                    fontFamily:'宋体',
+                    fontSize:16
+                }
             },
             tooltip: {
                 trigger: 'axis'
@@ -49,7 +57,7 @@ function drawBrokenLine() {
             grid: {
                 width:'auto',
                 height:'auto',
-                left: '20%'
+                left: '15%'
             },
             xAxis: {
                 type: 'category',
@@ -99,14 +107,14 @@ function refreshBrokenLine() {
     setTimeout(function () {
         let tmpdata = []
         let str;
-        console.log('tmp:',tmp);
+        // console.log('tmp:',tmp);
         if($('.buttons>button:nth-of-type(1)').hasClass('select')){
             tmp.forEach(function (v,i) {
                 let obj = {date:v.date,value:v.confirmed}
                 tmpdata.push(obj)
             })
             str = '确诊'
-            console.log('tmp1:',tmp);
+            // console.log('tmp1:',tmp);
             // console.log(str);
             // console.log('tmpdata:',tmpdata);
         }
@@ -123,14 +131,14 @@ function refreshBrokenLine() {
             str = '死亡'
         }
         let option = myChart3.getOption()
-        console.log(option.title);
-        console.log(option.title[0].text);
+        // console.log(option.title);
+        // console.log(option.title[0].text);
         option.title[0].text = `全国疫情 ${str} 人数汇总图`
-        console.log(tmpdata);
+        // console.log(tmpdata);
         option.series[0].data = tmpdata.map(function (item) {
             return item.value
         })
-        console.log(option.series[0]);
+        // console.log(option.series[0]);
         myChart3.setOption(option)
     },1000)
 

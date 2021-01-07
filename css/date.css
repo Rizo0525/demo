@@ -1,26 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 .buttons{
     display: inline-block;
 }
+
+.title{
+    line-height: 40px;
+    text-align: center;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    font-size: 40px;
+    padding: 20px 10px 10px 10px;
+    color: #5ea8c9;
+}
+.content{
+    margin-top: 30px;
+    position: relative;
+}
 .first_div,.second_div{
     display: inline-block;
-    width: 45%;
+    width: 47%;
+    /*height: 700px;*/
+    height: 690px;
+    position: relative;
+    float: left;
+}
+.first_div{
+    margin-left: 10px;
+}
+.second_div{
+    margin-left: 10px;
+    width: 700px;
+}
+.second_div>.PiePic{
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 #barLine{
-    width: 400px;
+    width: 330px;
     height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 #brokenLine{
-    width: 600px;
-    height: 300px;
+    width: 700px;
+    height: 380px;
+    position: absolute;
+    bottom: 0;
+}
+.first_div{
+    border: 1px solid #5ea8c9;
+    box-sizing: border-box;
+}
+.second_div>div{
+    display: inline-block;
+    border: 1px solid #5ea8c9;
+    box-sizing: border-box;
+}
+
+.back_button{
+    margin-top: 23px;
+    margin-left: 10px;
+}
+.back_button>button{
+    width: 60px;
+    height: 30px;
+}
+.buttons{
+    margin-top: 2px;
+    margin-left: 10px;
+}
+.buttons>button{
+    width: 60px;
+    height: 30px;
+}
+.refresh_button{
+    display: inline-block;
+}
+.refresh_button>button{
+    width: 60px;
+    height: 30px;
 }
 body {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     -ms-user-select: none;
+    background: #edeff1;
 }
 button{
     background: #ffffff;
+    opacity: 0.5;
     border: 1px solid #ccc;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -28,15 +102,20 @@ button{
     -ms-user-select: none;
 }
 .select{
-    background: aqua;
+    background: #5ea8c9;
 }
 #china-map{
     width: 600px;
     height: 520px;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 #date{
-    margin-left: 100px;
+    /*margin-left: 100px;*/
+    transform: translate(-50%);
+    position: absolute;
+    margin-left: 50%;
+    top: 3px;
+    z-index: 999;
 }
 #inputdate{
     width: 240px;
