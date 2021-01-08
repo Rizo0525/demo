@@ -4,7 +4,7 @@ function BindData(pName,str,first_ten){
     let svg = d3.select(".PiePic")
         .append("svg")
         .attr("height", 290)
-        .attr("width", 290)
+        .attr("width", 300)
 
     let pie = d3.pie()
         .value(d => d.value)
