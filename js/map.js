@@ -191,6 +191,15 @@ function dataManage(pName,data) {
         tmp = tmpSeriesData
     }
     // console.log('tmp',tmp);
+    let tmp1 = []
+    tmp.forEach(function (v) {
+        if(v.value===0){
+            return ;
+        }
+        tmp1.push(v)
+    })
+    console.log('tmp1::',tmp1);
+    tmp = tmp1
     tmpSeriesData = tmp;
     // console.log('1111',pName,tmpSeriesData);
 

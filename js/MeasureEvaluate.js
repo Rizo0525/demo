@@ -44,11 +44,11 @@ function MeasureInit() {
     // console.log('div',dv2);
     // console.log('dv3',dv3);
     let schema = [
-        {name: 'deathRate', index: 0, text: '死亡率'},
-        {name: 'cureRate', index: 1, text: '治愈率'},
+        {name: 'deathRate', index: 0, text: '死亡率(%)'},
+        {name: 'cureRate', index: 1, text: '治愈率(%)'},
         {name: 'rebounce', index: 2, text: '疫情反弹控制力'},
         {name: 'control', index: 3, text: '控制力度'},
-        {name: 'class', index: 4, text: ' 等级'},
+        {name: 'class', index: 4, text: '防疫等级'},
     ];
 
     let lineStyle = {
@@ -87,7 +87,16 @@ function MeasureInit() {
 
     let chart  = echarts.init(document.getElementById('MeausreEva'));
     let option = {
-        backgroundColor: '#dcd4e7',
+        title: {
+            text: `疫情防控措施评估`,
+            left:'center',
+            textStyle:{
+                color:'#5ea8c9',
+                fontFamily:'宋体',
+                fontSize:16
+            }
+        },
+        backgroundColor: '#ccc',
         color:color,
         legend: {
             bottom: 30,

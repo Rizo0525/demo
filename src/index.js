@@ -27,12 +27,26 @@ window.onload = function () {
             $(this).siblings().css('background','none')
             if($(this).text()==='累计确诊'){
                 $(this).css('background','#C23632')
+                console.log($(this).siblings());
+                $(this).siblings().css({
+                    background:'#fff'
+                })
             }
             else if($(this).text()==='累计治愈'){
                 $(this).css('background','#5337c2')
+                console.log($(this).siblings());
+
+                $(this).siblings().css({
+                    background:'#fff'
+                })
             }
             else if($(this).text()==='累计死亡'){
                 $(this).css('background','#c567cb')
+                console.log($(this).siblings());
+
+                $(this).siblings().css({
+                    background:'#fff'
+                })
             }
             maprenderModule.refreshData(data)
         })
