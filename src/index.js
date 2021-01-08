@@ -1,5 +1,6 @@
 let dateModule = require("../js/date.js")
 let maprenderModule = require("../js/map.js")
+let MeasureEvaluateModule = require("../js/MeasureEvaluate.js")
 window.onload = function () {
 
     let s = new dateModule.d({
@@ -106,5 +107,38 @@ window.onload = function () {
     $("#refresh").click(function () {
         window.history.go(0)
     })
+
+
+
+
+    //详情对比按钮
+    $('#detail').click(function () {
+        $('.third_div').show()
+        $('.first_div').css({
+            opacity:0
+        })
+        $('.second_div').css({
+            opacity:0
+        })
+        // $('body').css({
+        //     opacity:0.5
+        // })
+        // $('.third_div').css({
+        //     opacity:1
+        // })
+        MeasureEvaluateModule.MeasureInit()
+    })
+
+    $('.icon-ziyuan').click(function () {
+        console.log(2);
+        $('.third_div').hide()
+        $('.first_div').css({
+            opacity:1
+        })
+        $('.second_div').css({
+            opacity:1
+        })
+    })
+
     window.getInputvalue = getInputvalue;
 }
